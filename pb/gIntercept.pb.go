@@ -8,8 +8,8 @@ It is generated from these files:
 	gIntercept.proto
 
 It has these top-level messages:
-	DataToIntercept
-	Response
+	GCDRequest
+	GCDResponse
 */
 package pb
 
@@ -33,40 +33,40 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type DataToIntercept struct {
+type GCDRequest struct {
 	A uint64 `protobuf:"varint,1,opt,name=a" json:"a,omitempty"`
 	B uint64 `protobuf:"varint,2,opt,name=b" json:"b,omitempty"`
 }
 
-func (m *DataToIntercept) Reset()                    { *m = DataToIntercept{} }
-func (m *DataToIntercept) String() string            { return proto.CompactTextString(m) }
-func (*DataToIntercept) ProtoMessage()               {}
-func (*DataToIntercept) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *GCDRequest) Reset()                    { *m = GCDRequest{} }
+func (m *GCDRequest) String() string            { return proto.CompactTextString(m) }
+func (*GCDRequest) ProtoMessage()               {}
+func (*GCDRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *DataToIntercept) GetA() uint64 {
+func (m *GCDRequest) GetA() uint64 {
 	if m != nil {
 		return m.A
 	}
 	return 0
 }
 
-func (m *DataToIntercept) GetB() uint64 {
+func (m *GCDRequest) GetB() uint64 {
 	if m != nil {
 		return m.B
 	}
 	return 0
 }
 
-type Response struct {
+type GCDResponse struct {
 	Result uint64 `protobuf:"varint,1,opt,name=result" json:"result,omitempty"`
 }
 
-func (m *Response) Reset()                    { *m = Response{} }
-func (m *Response) String() string            { return proto.CompactTextString(m) }
-func (*Response) ProtoMessage()               {}
-func (*Response) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *GCDResponse) Reset()                    { *m = GCDResponse{} }
+func (m *GCDResponse) String() string            { return proto.CompactTextString(m) }
+func (*GCDResponse) ProtoMessage()               {}
+func (*GCDResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-func (m *Response) GetResult() uint64 {
+func (m *GCDResponse) GetResult() uint64 {
 	if m != nil {
 		return m.Result
 	}
@@ -74,8 +74,8 @@ func (m *Response) GetResult() uint64 {
 }
 
 func init() {
-	proto.RegisterType((*DataToIntercept)(nil), "pb.dataToIntercept")
-	proto.RegisterType((*Response)(nil), "pb.response")
+	proto.RegisterType((*GCDRequest)(nil), "pb.GCDRequest")
+	proto.RegisterType((*GCDResponse)(nil), "pb.GCDResponse")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -86,64 +86,64 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for DecoderService service
+// Client API for GCDService service
 
-type DecoderServiceClient interface {
-	Compute(ctx context.Context, in *DataToIntercept, opts ...grpc.CallOption) (*Response, error)
+type GCDServiceClient interface {
+	Compute(ctx context.Context, in *GCDRequest, opts ...grpc.CallOption) (*GCDResponse, error)
 }
 
-type decoderServiceClient struct {
+type gCDServiceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewDecoderServiceClient(cc *grpc.ClientConn) DecoderServiceClient {
-	return &decoderServiceClient{cc}
+func NewGCDServiceClient(cc *grpc.ClientConn) GCDServiceClient {
+	return &gCDServiceClient{cc}
 }
 
-func (c *decoderServiceClient) Compute(ctx context.Context, in *DataToIntercept, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
-	err := grpc.Invoke(ctx, "/pb.decoderService/Compute", in, out, c.cc, opts...)
+func (c *gCDServiceClient) Compute(ctx context.Context, in *GCDRequest, opts ...grpc.CallOption) (*GCDResponse, error) {
+	out := new(GCDResponse)
+	err := grpc.Invoke(ctx, "/pb.GCDService/Compute", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for DecoderService service
+// Server API for GCDService service
 
-type DecoderServiceServer interface {
-	Compute(context.Context, *DataToIntercept) (*Response, error)
+type GCDServiceServer interface {
+	Compute(context.Context, *GCDRequest) (*GCDResponse, error)
 }
 
-func RegisterDecoderServiceServer(s *grpc.Server, srv DecoderServiceServer) {
-	s.RegisterService(&_DecoderService_serviceDesc, srv)
+func RegisterGCDServiceServer(s *grpc.Server, srv GCDServiceServer) {
+	s.RegisterService(&_GCDService_serviceDesc, srv)
 }
 
-func _DecoderService_Compute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DataToIntercept)
+func _GCDService_Compute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GCDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DecoderServiceServer).Compute(ctx, in)
+		return srv.(GCDServiceServer).Compute(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.decoderService/Compute",
+		FullMethod: "/pb.GCDService/Compute",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DecoderServiceServer).Compute(ctx, req.(*DataToIntercept))
+		return srv.(GCDServiceServer).Compute(ctx, req.(*GCDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _DecoderService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "pb.decoderService",
-	HandlerType: (*DecoderServiceServer)(nil),
+var _GCDService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.GCDService",
+	HandlerType: (*GCDServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Compute",
-			Handler:    _DecoderService_Compute_Handler,
+			Handler:    _GCDService_Compute_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -153,15 +153,15 @@ var _DecoderService_serviceDesc = grpc.ServiceDesc{
 func init() { proto.RegisterFile("gIntercept.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 156 bytes of a gzipped FileDescriptorProto
+	// 151 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x48, 0xf7, 0xcc, 0x2b,
 	0x49, 0x2d, 0x4a, 0x4e, 0x2d, 0x28, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2a, 0x48,
-	0x52, 0xd2, 0xe5, 0xe2, 0x4f, 0x49, 0x2c, 0x49, 0x0c, 0xc9, 0x87, 0x4b, 0x0a, 0xf1, 0x70, 0x31,
-	0x26, 0x4a, 0x30, 0x2a, 0x30, 0x6a, 0xb0, 0x04, 0x31, 0x26, 0x82, 0x78, 0x49, 0x12, 0x4c, 0x10,
-	0x5e, 0x92, 0x92, 0x12, 0x17, 0x47, 0x51, 0x6a, 0x71, 0x41, 0x7e, 0x5e, 0x71, 0xaa, 0x90, 0x18,
-	0x17, 0x5b, 0x51, 0x6a, 0x71, 0x69, 0x4e, 0x09, 0x54, 0x31, 0x94, 0x67, 0xe4, 0xc0, 0xc5, 0x97,
-	0x92, 0x9a, 0x9c, 0x9f, 0x92, 0x5a, 0x14, 0x9c, 0x5a, 0x54, 0x96, 0x99, 0x9c, 0x2a, 0xa4, 0xc7,
-	0xc5, 0xee, 0x9c, 0x9f, 0x5b, 0x50, 0x5a, 0x92, 0x2a, 0x24, 0xac, 0x57, 0x90, 0xa4, 0x87, 0x66,
-	0xa3, 0x14, 0x0f, 0x48, 0x10, 0x66, 0xae, 0x12, 0x43, 0x12, 0x1b, 0xd8, 0x7d, 0xc6, 0x80, 0x00,
-	0x00, 0x00, 0xff, 0xff, 0x6b, 0x31, 0xd3, 0x59, 0xb3, 0x00, 0x00, 0x00,
+	0x52, 0xd2, 0xe0, 0xe2, 0x72, 0x77, 0x76, 0x09, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0x11, 0xe2,
+	0xe1, 0x62, 0x4c, 0x94, 0x60, 0x54, 0x60, 0xd4, 0x60, 0x09, 0x62, 0x4c, 0x04, 0xf1, 0x92, 0x24,
+	0x98, 0x20, 0xbc, 0x24, 0x25, 0x55, 0x2e, 0x6e, 0xb0, 0xca, 0xe2, 0x82, 0xfc, 0xbc, 0xe2, 0x54,
+	0x21, 0x31, 0x2e, 0xb6, 0xa2, 0xd4, 0xe2, 0xd2, 0x9c, 0x12, 0xa8, 0x7a, 0x28, 0xcf, 0xc8, 0x0a,
+	0x6c, 0x60, 0x70, 0x6a, 0x51, 0x59, 0x66, 0x72, 0xaa, 0x90, 0x0e, 0x17, 0xbb, 0x73, 0x7e, 0x6e,
+	0x41, 0x69, 0x49, 0xaa, 0x10, 0x9f, 0x5e, 0x41, 0x92, 0x1e, 0xc2, 0x2e, 0x29, 0x7e, 0x38, 0x1f,
+	0x62, 0xa2, 0x12, 0x43, 0x12, 0x1b, 0xd8, 0x5d, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2d,
+	0xe2, 0x50, 0x78, 0xab, 0x00, 0x00, 0x00,
 }

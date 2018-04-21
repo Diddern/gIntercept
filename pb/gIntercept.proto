@@ -2,16 +2,15 @@ syntax = "proto3";
 
 package pb;
 
-message dataToIntercept{
+message GCDRequest {
     uint64 a = 1;
     uint64 b = 2;
-
 }
 
-message response {
+message GCDResponse {
     uint64 result = 1;
 }
 
-service decoderService{
-    rpc Compute (dataToIntercept) returns (response) {}
+service GCDService {
+    rpc Compute (GCDRequest) returns (GCDResponse) {}
 }
