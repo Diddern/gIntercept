@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+message dataToIntercept{
+    uint64 a = 1;
+    uint64 b = 2;
+
+}
+
+message response {
+    uint64 result = 1;
+}
+
+service decoderService{
+    rpc Compute (dataToIntercept) returns (response) {}
+}
