@@ -43,23 +43,25 @@ func (s *server) Compute(ctx context.Context, requestFromClient *pb.GCDRequest) 
 	if err != nil {
 		log.Fatalf("cert load error: %s", err)
 	}
+
+	// Connect securely to GCD service
 	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(creds))
-	if err != nil{
-		log.Fatalf("Dail failed %v", err)
+	if err != nil {
+		log.Fatalf("Failed to start gRPC connection: %v", err)
 	}
+	defer conn.Close()
 	log.Print("Dailed sucessfully to ", address)
 
 	gcdClient := pb.NewGCDServiceClient(conn)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	resultFromServer, err := gcdClient.Compute(ctx, requestFromClient,)
+	resultFromServer, err := gcdClient.Compute(ctx, requestFromClient)
 	if err != nil{
-		log.Fatalf("Could not send to server: ", err)
+		log.Fatalf("Could not send to server: %v", err)
 	}
-	log.Print("ctx: ", requestFromClient)
+	log.Print("ctx: ", ctx)
 	log.Print("Request from client: ", requestFromClient)
 	log.Print("Response from server: ", resultFromServer)
 	return &pb.GCDResponse{Result: resultFromServer.Result}, nil
 }
-
