@@ -9,15 +9,14 @@ import (
 	"google.golang.org/grpc/reflection"
 	"github.com/Diddern/gIntercept/pb"
 	"google.golang.org/grpc/credentials"
-
 )
 
 type server struct{}
 
 var portNumberIn = ":5001"
 var addressAndPortNumberOut =  "localhost:3000"
-var pathToCert = "../gRPC-simpleGCDService/gcd/server-cert.pem"
-var pathToKey = "../gRPC-simpleGCDService/gcd/server-key.pem"
+var pathToCert = "../gRPC-simpleGCDService/certs/server-cert.pem"
+var pathToKey = "../gRPC-simpleGCDService/certs/server-key.pem"
 
 func main()  {
 
