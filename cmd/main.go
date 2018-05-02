@@ -34,14 +34,14 @@ func main()  {
 	//Create gRPC Server
 	s := grpc.NewServer(
 		grpc.Creds(creds),)
-	pb.RegisterGCDServiceServer(s, &server{})
+	pb.RegisterServiceServer(s, &server{})
 	reflection.Register(s)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}
 }
 
-func (s *server) Compute(ctx context.Context, requestFromClient *pb.GCDRequest) (*pb.GCDResponse, error) {
+func (s *server) Compute(ctx context.Context, requestFromClient *pb.Request) (*pb.Response, error) {
 
 
 	creds, err := credentials.NewClientTLSFromFile(pathToCert, "")
@@ -57,7 +57,7 @@ func (s *server) Compute(ctx context.Context, requestFromClient *pb.GCDRequest) 
 	defer conn.Close()
 
 
-	gcdClient := pb.NewGCDServiceClient(conn)
+	gcdClient := pb.NewServiceClient(conn)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
@@ -67,10 +67,10 @@ func (s *server) Compute(ctx context.Context, requestFromClient *pb.GCDRequest) 
 	}
 
 	LogRequestsAndResponses(ctx, requestFromClient, resultFromServer)
-	return &pb.GCDResponse{Result: resultFromServer.Result}, nil
+	return &pb.Response{Result: resultFromServer.Result}, nil
 }
 
-func LogRequestsAndResponses(ctx context.Context, requestFromClient *pb.GCDRequest, resultFromServer *pb.GCDResponse){
+func LogRequestsAndResponses(ctx context.Context, requestFromClient *pb.Request, resultFromServer *pb.Response){
 	log.Printf("Context for reqest: \t%v", ctx)
 	log.Printf("Request from client: \t%v", requestFromClient)
 	log.Printf("Response from server: \t%v", resultFromServer)
