@@ -4,7 +4,7 @@ package docker.swarmkit.v1;
 
 import "github.com/docker/swarmkit/api/types.proto";
 import "github.com/docker/swarmkit/api/specs.proto";
-import "gogoproto/gogo.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "github.com/docker/swarmkit/protobuf/plugin/plugin.proto";
 
 // CA defines the RPC methods for requesting certificates from a CA.
