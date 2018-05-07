@@ -13,7 +13,7 @@ import (
 
 type server struct{}
 
-var portNumberIn = ":5001"
+var portNumberIn = ":2377"
 var addressAndPortNumberOut =  "localhost:3000"
 var pathToCert = "../gRPC-simpleGCDService/certs/server-cert.pem"
 var pathToKey = "../gRPC-simpleGCDService/certs/server-key.pem"
@@ -40,6 +40,8 @@ func main()  {
 		log.Fatalf("Failed to serve: %v", err)
 	}
 }
+
+
 
 func (s *server) Compute(ctx context.Context, requestFromClient *pb.Request) (*pb.Response, error) {
 

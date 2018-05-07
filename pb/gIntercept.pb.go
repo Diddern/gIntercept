@@ -8,8 +8,8 @@ It is generated from these files:
 	gIntercept.proto
 
 It has these top-level messages:
-	Request
-	Response
+	GCDRequest
+	GCDResponse
 */
 package pb
 
@@ -33,40 +33,40 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-type Request struct {
+type GCDRequest struct {
 	A uint64 `protobuf:"varint,1,opt,name=a" json:"a,omitempty"`
 	B uint64 `protobuf:"varint,2,opt,name=b" json:"b,omitempty"`
 }
 
-func (m *Request) Reset()                    { *m = Request{} }
-func (m *Request) String() string            { return proto.CompactTextString(m) }
-func (*Request) ProtoMessage()               {}
-func (*Request) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
+func (m *GCDRequest) Reset()                    { *m = GCDRequest{} }
+func (m *GCDRequest) String() string            { return proto.CompactTextString(m) }
+func (*GCDRequest) ProtoMessage()               {}
+func (*GCDRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{0} }
 
-func (m *Request) GetA() uint64 {
+func (m *GCDRequest) GetA() uint64 {
 	if m != nil {
 		return m.A
 	}
 	return 0
 }
 
-func (m *Request) GetB() uint64 {
+func (m *GCDRequest) GetB() uint64 {
 	if m != nil {
 		return m.B
 	}
 	return 0
 }
 
-type Response struct {
+type GCDResponse struct {
 	Result uint64 `protobuf:"varint,1,opt,name=result" json:"result,omitempty"`
 }
 
-func (m *Response) Reset()                    { *m = Response{} }
-func (m *Response) String() string            { return proto.CompactTextString(m) }
-func (*Response) ProtoMessage()               {}
-func (*Response) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *GCDResponse) Reset()                    { *m = GCDResponse{} }
+func (m *GCDResponse) String() string            { return proto.CompactTextString(m) }
+func (*GCDResponse) ProtoMessage()               {}
+func (*GCDResponse) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-func (m *Response) GetResult() uint64 {
+func (m *GCDResponse) GetResult() uint64 {
 	if m != nil {
 		return m.Result
 	}
@@ -74,8 +74,8 @@ func (m *Response) GetResult() uint64 {
 }
 
 func init() {
-	proto.RegisterType((*Request)(nil), "pb.request")
-	proto.RegisterType((*Response)(nil), "pb.response")
+	proto.RegisterType((*GCDRequest)(nil), "pb.GCDRequest")
+	proto.RegisterType((*GCDResponse)(nil), "pb.GCDResponse")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -86,64 +86,64 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for Service service
+// Client API for GCDService service
 
-type ServiceClient interface {
-	Compute(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+type GCDServiceClient interface {
+	Compute(ctx context.Context, in *GCDRequest, opts ...grpc.CallOption) (*GCDResponse, error)
 }
 
-type serviceClient struct {
+type gCDServiceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewServiceClient(cc *grpc.ClientConn) ServiceClient {
-	return &serviceClient{cc}
+func NewGCDServiceClient(cc *grpc.ClientConn) GCDServiceClient {
+	return &gCDServiceClient{cc}
 }
 
-func (c *serviceClient) Compute(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
-	err := grpc.Invoke(ctx, "/pb.service/Compute", in, out, c.cc, opts...)
+func (c *gCDServiceClient) Compute(ctx context.Context, in *GCDRequest, opts ...grpc.CallOption) (*GCDResponse, error) {
+	out := new(GCDResponse)
+	err := grpc.Invoke(ctx, "/pb.GCDService/Compute", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for Service service
+// Server API for GCDService service
 
-type ServiceServer interface {
-	Compute(context.Context, *Request) (*Response, error)
+type GCDServiceServer interface {
+	Compute(context.Context, *GCDRequest) (*GCDResponse, error)
 }
 
-func RegisterServiceServer(s *grpc.Server, srv ServiceServer) {
-	s.RegisterService(&_Service_serviceDesc, srv)
+func RegisterGCDServiceServer(s *grpc.Server, srv GCDServiceServer) {
+	s.RegisterService(&_GCDService_serviceDesc, srv)
 }
 
-func _Service_Compute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+func _GCDService_Compute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GCDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).Compute(ctx, in)
+		return srv.(GCDServiceServer).Compute(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.service/Compute",
+		FullMethod: "/pb.GCDService/Compute",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).Compute(ctx, req.(*Request))
+		return srv.(GCDServiceServer).Compute(ctx, req.(*GCDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Service_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "pb.service",
-	HandlerType: (*ServiceServer)(nil),
+var _GCDService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.GCDService",
+	HandlerType: (*GCDServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Compute",
-			Handler:    _Service_Compute_Handler,
+			Handler:    _GCDService_Compute_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -153,15 +153,15 @@ var _Service_serviceDesc = grpc.ServiceDesc{
 func init() { proto.RegisterFile("gIntercept.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 148 bytes of a gzipped FileDescriptorProto
+	// 151 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x48, 0xf7, 0xcc, 0x2b,
 	0x49, 0x2d, 0x4a, 0x4e, 0x2d, 0x28, 0xd1, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2a, 0x48,
-	0x52, 0x52, 0xe5, 0x62, 0x2f, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0x11, 0xe2, 0xe1, 0x62, 0x4c,
-	0x94, 0x60, 0x54, 0x60, 0xd4, 0x60, 0x09, 0x62, 0x4c, 0x04, 0xf1, 0x92, 0x24, 0x98, 0x20, 0xbc,
-	0x24, 0x25, 0x25, 0x2e, 0x8e, 0xa2, 0xd4, 0xe2, 0x82, 0xfc, 0xbc, 0xe2, 0x54, 0x21, 0x31, 0x2e,
-	0xb6, 0xa2, 0xd4, 0xe2, 0xd2, 0x9c, 0x12, 0xa8, 0x62, 0x28, 0xcf, 0xc8, 0x90, 0x8b, 0xbd, 0x38,
-	0xb5, 0xa8, 0x2c, 0x33, 0x39, 0x55, 0x48, 0x8d, 0x8b, 0xdd, 0x39, 0x3f, 0xb7, 0xa0, 0xb4, 0x24,
-	0x55, 0x88, 0x5b, 0xaf, 0x20, 0x49, 0x0f, 0x6a, 0x85, 0x14, 0x0f, 0x84, 0x03, 0x31, 0x48, 0x89,
-	0x21, 0x89, 0x0d, 0xec, 0x10, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff, 0xae, 0x5d, 0x19, 0xa0,
-	0x9c, 0x00, 0x00, 0x00,
+	0x52, 0xd2, 0xe0, 0xe2, 0x72, 0x77, 0x76, 0x09, 0x4a, 0x2d, 0x2c, 0x4d, 0x2d, 0x2e, 0x11, 0xe2,
+	0xe1, 0x62, 0x4c, 0x94, 0x60, 0x54, 0x60, 0xd4, 0x60, 0x09, 0x62, 0x4c, 0x04, 0xf1, 0x92, 0x24,
+	0x98, 0x20, 0xbc, 0x24, 0x25, 0x55, 0x2e, 0x6e, 0xb0, 0xca, 0xe2, 0x82, 0xfc, 0xbc, 0xe2, 0x54,
+	0x21, 0x31, 0x2e, 0xb6, 0xa2, 0xd4, 0xe2, 0xd2, 0x9c, 0x12, 0xa8, 0x7a, 0x28, 0xcf, 0xc8, 0x0a,
+	0x6c, 0x60, 0x70, 0x6a, 0x51, 0x59, 0x66, 0x72, 0xaa, 0x90, 0x0e, 0x17, 0xbb, 0x73, 0x7e, 0x6e,
+	0x41, 0x69, 0x49, 0xaa, 0x10, 0x9f, 0x5e, 0x41, 0x92, 0x1e, 0xc2, 0x2e, 0x29, 0x7e, 0x38, 0x1f,
+	0x62, 0xa2, 0x12, 0x43, 0x12, 0x1b, 0xd8, 0x5d, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2d,
+	0xe2, 0x50, 0x78, 0xab, 0x00, 0x00, 0x00,
 }

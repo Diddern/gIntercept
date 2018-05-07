@@ -2,15 +2,15 @@ syntax = "proto3";
 
 package pb;
 
-message request {
+message GCDRequest {
     uint64 a = 1;
     uint64 b = 2;
 }
 
-message response {
+message GCDResponse {
     uint64 result = 1;
 }
 
-service service {
-    rpc Compute (request) returns (response) {}
+service GCDService {
+    rpc Compute (GCDRequest) returns (GCDResponse) {}
 }
