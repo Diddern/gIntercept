@@ -89,12 +89,10 @@ func getRemoteCA() ([]byte) {
 	}
 	defer conn.Close()
 
-	client := pb.NewCAClient(conn.ClientConn)
+	//client := api.NewCAClient(Conn.ClientConn)
+	client := api.NewCAClient(nil)
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
-	defer func() {
-		conn.Close(err == nil)
-	}()
 	response, err := client.GetRootCACertificate(ctx, &api.GetRootCACertificateRequest{})
 	if err != nil {
 		fmt.Errorf("problems getting the respoonse %s", err)
