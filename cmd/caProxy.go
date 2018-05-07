@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"github.com/docker/swarmkit/remotes"
-	api "github.com/Diddern/gIntercept/pb"
+	"github.com/Diddern/gIntercept/pb/api"
 	"crypto/x509"
 	cfsigner "github.com/cloudflare/cfssl/signer"
 	"github.com/opencontainers/go-digest"
@@ -89,7 +89,7 @@ func getRemoteCA() ([]byte) {
 	}
 	defer conn.Close()
 
-	client := api.NewCAClient(conn.ClientConn)
+	client := pb.NewCAClient(conn.ClientConn)
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 	defer func() {
